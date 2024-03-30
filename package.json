@@ -1,6 +1,6 @@
 {
   "name": "capacitor-typeorm-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Capacitor SQLite TypeOrm CLI",
   "main": "./cli.js",
   "module": "./cli.mjs",
