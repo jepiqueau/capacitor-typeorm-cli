@@ -29,10 +29,10 @@ CLI (Command Line Interface) module designed to work seamlessly with the @capaci
 ## Installing the CLI
 
 ```bash
-npm install --save capacitor-typeorm-cli
+npm install -g capacitor-typeorm-cli
 ```
 
-For `Typescript` projects two others packages are required
+For `Typescript` projects two others packages are required to be installed
 
 ```bash
 npm install --save-dev @types/node 
@@ -41,28 +41,63 @@ npm install --save-dev ts-node
 
 ## Supported Command
 
-| Name                 | Description
-| :------------------- | :------------------------------ |
-| migration-generate   | Generate typeorm migration file |
+| Name                   | Description
+| :--------------------- | :------------------------------ |
+| `migration-generate`   | Generate typeorm migration file |
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! All the others commands from the typeOrm CLI are not supported. !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-All the others commands from the typeOrm CLI are not supported.
+To get the list of commands via the Help run
 
-### Usage 
+```bash
+npx capacitor-typeorm-cli -h
+```
 
+Output
+
+```text
+Usage: capacitor-typeorm-cli [options] [command]
+
+A CLI tool for generating migrations for Capacitor SQite TypeOrm
+
+Options:
+  -V, --version                 output the version number
+  -h, --help                    display help for command
+
+Commands:
+  migration-generate [options]  generate typeorm migration file
+  help [command]                display help for command
+```
+
+## Usage migration-generate
+
+Get it from the Help
+
+```bash
+npx capacitor-typeorm-cli help migration-generate
+```
+Output
+
+```text
 Usage: capacitor-typeorm-cli migration-generate [options]
 
-generate migration
+generate typeorm migration file
 
 Options:
   -c, --command <commandName>      Alias command name
   -e, --entity <entityPath>        Alias for entity path
   -m, --migration <migrationPath>  Alias for migration path
-  -i, --indexJs [indexJs]          Alias Index file extension for Javascript instead of Typescript 
+  -i, --indexJs [indexJs]          Alias Index file extension for Javascript
+                                   instead of Typescript
   -db, --database [databasePath]   Alias for database path
-  -o, --outputJs [outputJs]        Generate a migration file on Javascript instead of Typescript
+  -o, --outputJs [outputJs]        Generate a migration file on Javascript
+                                   instead of Typescript
   -t, --timestamp [timestamp]      Custom timestamp for the migration name
   -h, --help                       display help for command
+```
 
 ### EntityPath (Mandatory)
 
@@ -102,7 +137,6 @@ When set to true, this parameter instructs the CLI to generate the migration fil
 If you need to specify a timestamp for the migration name, use the -t option (alias for --timestamp) and provide the timestamp (should be a non-negative number). If not provided, the default timestamp is obtained from ```Date.now()```.
 
 
-
 ## Project Folder Structure
 
 src/
@@ -118,7 +152,50 @@ src/
   | ...        
 
 
+## Package.json Scripts
 
+Add Capacitor Typeorm command under scripts section in package.json
+
+- For commonjs project
+
+  ```json
+  "scripts": {
+      ...
+      "captypeorm": "typeorm-ts-node-commonjs"
+  }
+  ```
+
+- For ESM project 
+
+  ```json
+  "scripts": {
+      ...
+      "captypeorm": "capacitor-typeorm-esm",
+  }
+  ```
+
+- Then add scripts to generate the migrations
+
+  ```json
+  "scripts": {
+      ...
+    "cap:typeorm:migration:initialAuthor": "npm run captypeorm migration-generate -- src/databases/entities/author src/databases/migrations/author/InitialAuthorPost",
+    "cap:typeorm:migration:refactorAuthor": "npm run captypeorm migration-generate -- -m src/databases/migrations/author/RefactorAuthorPost -t 1234567890123 -db ABSOLUTE_PATH_TO_YOUR_DB -e src/databases/entities/author",
+
+  }
+  ```
+
+- In case one do not want to use the script `captypeorm` ,  one can define the script like this For ESM module
+
+  ```json
+  "scripts": {
+      ...
+    "cap:typeorm:migration:initialAuthor": "npx capacitor-typeorm-esm migration-generate src/databases/entities/author src/databases/migrations/author/InitialAuthorPost",
+    "cap:typeorm:migration:refactorAuthor": "npx capacitor-typeorm-esm migration-generate -m src/databases/migrations/author/RefactorAuthorPost -t 1234567890123 -db ABSOLUTE_PATH_TO_YOUR_DB -e src/databases/entities/author",
+
+  }
+  ```
+  
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):

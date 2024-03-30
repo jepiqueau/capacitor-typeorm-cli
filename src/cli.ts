@@ -14,7 +14,7 @@ const program = new Command();
 program 
 .name('capacitor-typeorm-cli')
 .version('0.0.1')
-.description('A CLI tool for generating migrations for Capacitor SQite TypeOrm')
+.description('A CLI tool for generating migrations for Capacitor SQLite TypeOrm')
 
 // Define options with aliases
 program
