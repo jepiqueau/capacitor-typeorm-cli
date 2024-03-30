@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "outDir": "./dist",
+    "strict": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "esModuleInterop": false, // Set esModuleInterop to true
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false, // added
+    "experimentalDecorators": true, //For DB ORM decorators
+    "emitDecoratorMetadata": true, //For DB ORM decorators
+
+  },
+  "ts-node": {
+    "esm": false,
+    "experimentalSpecifierResolution": "node"
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
